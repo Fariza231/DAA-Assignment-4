@@ -9,7 +9,6 @@ public class SCCTests {
 
     @Test
     public void testSimpleCycle() {
-        // 0 → 1 → 2 → 0  forms one SCC
         List<List<Integer>> adj = new ArrayList<>();
         for (int i = 0; i < 3; i++) adj.add(new ArrayList<>());
         adj.get(0).add(1);
@@ -25,7 +24,6 @@ public class SCCTests {
 
     @Test
     public void testAcyclic() {
-        // 0 → 1 → 2, no cycles, so 3 SCCs
         List<List<Integer>> adj = new ArrayList<>();
         for (int i = 0; i < 3; i++) adj.add(new ArrayList<>());
         adj.get(0).add(1);

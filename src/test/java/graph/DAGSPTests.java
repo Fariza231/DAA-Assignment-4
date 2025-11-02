@@ -10,7 +10,6 @@ public class DAGSPTests {
 
     @Test
     public void testShortestOnDAG() {
-        // 0 ->1 (2), 0->2(5), 1->2(1)
         List<List<int[]>> adj = new ArrayList<>();
         for (int i = 0; i < 3; i++) adj.add(new ArrayList<>());
         adj.get(0).add(new int[]{1, 2});
@@ -18,7 +17,7 @@ public class DAGSPTests {
         adj.get(1).add(new int[]{2, 1});
 
         DAGShortestPaths sp = new DAGShortestPaths(adj, 0);
-        int[] d = sp.getDistances();  // возвращает int[]
+        int[] d = sp.getDistances();
         assertEquals(0, d[0]);
         assertEquals(2, d[1]);
         assertEquals(3, d[2]);
@@ -26,7 +25,6 @@ public class DAGSPTests {
 
     @Test
     public void testLongestOnDAG() {
-        // longest from 0 is 0->1->2 total 3
         List<List<int[]>> adj = new ArrayList<>();
         for (int i = 0; i < 3; i++) adj.add(new ArrayList<>());
         adj.get(0).add(new int[]{1, 2});

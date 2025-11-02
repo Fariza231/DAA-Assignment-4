@@ -8,26 +8,20 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
-/**
- * Unified Main class for Assignment 4:
- * - If run with no arguments → analyzes all JSON in /data and saves results.csv
- * - If run with one file path argument → runs detailed analysis for that file
- */
 public class Main {
 
     public static void main(String[] args) {
         try {
             if (args.length == 0) {
-                runBatchMode(); // analyze all files in /data
+                runBatchMode();
             } else {
-                runSingleFile(args[0]); // analyze one specific file
+                runSingleFile(args[0]);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    // -------------------- Single file detailed analysis --------------------
     private static void runSingleFile(String filePath) throws Exception {
         System.out.println("Loading graph from: " + filePath);
 
@@ -90,7 +84,6 @@ public class Main {
         System.out.println("Longest distance: " + lp.getLongestDistance());
     }
 
-    // -------------------- Batch mode for all /data JSONs --------------------
     private static void runBatchMode() throws Exception {
         File folder = new File("data");
         File[] files = folder.listFiles((dir, name) -> name.endsWith(".json"));

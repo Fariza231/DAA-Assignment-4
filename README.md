@@ -9,17 +9,41 @@ The purpose of this project is to integrate two key algorithmic topics:
 
 The algorithms are applied to a simulated Smart City / Smart Campus Scheduling problem,
 where each node represents a city-service task, and edges represent task dependencies.
+
 ---
 
 ## Implemented Components
+1. Strongly Connected Components (Tarjan’s Algorithm)
 
-| Component | Description |
-|------------|-------------|
-| **SCC (Tarjan’s Algorithm)** | Detects cyclic dependencies in directed graphs and groups them into strongly connected components. |
-| **Condensation Graph** | Builds a DAG representation of SCCs to simplify further processing. |
-| **Topological Sort (Kahn’s Algorithm)** | Computes a valid execution order of acyclic components. |
-| **Shortest Path in DAG** | Finds optimal task ordering based on edge weights using dynamic programming. |
-| **Longest Path (Critical Path)** | Computes the critical path length and sequence of tasks. |
+This module is responsible for detecting cyclic dependencies in directed graphs.
+Using Tarjan’s depth-first search–based algorithm, it identifies groups of nodes that are mutually reachable, known as strongly connected components (SCCs).
+These SCCs represent cycles in the dependency structure (e.g., when task A depends on B, and B again depends on A).
+This step is essential for breaking down a complex cyclic graph into manageable acyclic parts.
+
+2. Condensation Graph Construction
+
+Once the SCCs are identified, the system builds a condensation graph, where each SCC is represented as a single vertex.
+This condensation process effectively transforms any general directed graph into a Directed Acyclic Graph (DAG).
+It reduces complexity by eliminating cycles and enabling the application of topological sorting and dynamic programming algorithms on the simplified structure.
+
+3. Topological Sorting (Kahn’s Algorithm)
+
+The topological sorting module computes a linear ordering of nodes in the DAG such that all directed edges go from earlier to later vertices.
+This ensures that each task or component is processed only after all of its dependencies have been resolved.
+Kahn’s algorithm was implemented for its clarity and efficiency in handling nodes with zero in-degree.
+It also serves as the foundation for computing shortest and longest paths in the DAG.
+
+4. Shortest Path in DAG
+
+After topological ordering, the program applies dynamic programming relaxation over the DAG to compute the shortest paths from a given source node.
+Since the DAG contains no cycles, this method runs efficiently in linear time (O(V + E)), updating distances as it progresses through the topological order.
+This component models the optimal scheduling of city tasks — finding the minimum total time or cost to complete dependent operations.
+
+5. Longest Path (Critical Path Analysis)
+
+The longest path algorithm identifies the critical path, which represents the sequence of tasks that determine the overall project duration.
+Using the same topological order but reversing the relaxation condition, it finds the maximum cumulative weight of edges.
+The result helps to determine which tasks cannot be delayed without affecting the overall schedule, a concept widely used in project management and smart infrastructure planning.
 
 ---
 
@@ -55,18 +79,20 @@ Figure 1 – Execution Time per Dataset shows that both shortest and longest pat
 
 Figure 2 – Performance vs Graph Size demonstrates a near-linear time growth, confirming O(V+E) complexity.
 ![img_2.png](img_2.png)
+
 ---
 
 ## Conclusions
+This project successfully integrates three fundamental graph algorithms — Tarjan’s SCC, Topological Sort, and Shortest/Longest Path in DAGs — into a single cohesive system simulating smart city scheduling.
 
-- **TarjanSCC** efficiently detects cyclic dependencies.
-- **TopologicalSort** provides valid execution order for independent components.
-- **DAGShortestPaths** and **DAGLongestPaths** enable optimal and critical path scheduling.
+Through this implementation:
 
-This project demonstrates how **key graph algorithms** can be integrated  
-for **Smart City task planning and scheduling optimization**.
+- Tarjan’s algorithm efficiently detects cyclic dependencies in city-service tasks, preventing circular scheduling errors.
+- Condensation graph construction transforms complex cyclic systems into simplified acyclic ones, enabling efficient task planning.
+- Topological sorting provides a valid execution order of tasks, ensuring all dependencies are respected.
+- Shortest path analysis identifies the optimal, most time-efficient way to complete dependent city operations.
+- Longest path analysis (critical path) determines which sequences of tasks directly impact overall project completion time.
 
----
-
-
-
+Performance testing on small, medium, and large datasets confirmed that all algorithms scale efficiently with graph size.
+Even in dense graphs, computation times remained within milliseconds due to the linear-time complexity of the implemented algorithms.
+Overall, this project demonstrates how theoretical graph algorithms can be effectively applied to real-world scheduling and optimization problems within Smart City and Smart Campus systems.

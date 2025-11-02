@@ -6,15 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-/**
- * GraphGenerator automatically creates 9 test datasets:
- *  - 3 small (6–10 nodes)
- *  - 3 medium (10–20 nodes)
- *  - 3 large (20–50 nodes)
- *
- * Each dataset may include both cyclic and acyclic structures.
- * Output: JSON files stored in /data/
- */
 public class GraphGenerator {
 
     private static final Random rand = new Random();
@@ -23,21 +14,15 @@ public class GraphGenerator {
         generateAll();
     }
 
-    /**
-     * Generate all datasets for small, medium, and large categories.
-     */
     public static void generateAll() throws IOException {
-        // small graphs
         generate("data/small_1.json", 6, 9, true);
         generate("data/small_2.json", 8, 10, false);
         generate("data/small_3.json", 10, 15, true);
 
-        // medium graphs
         generate("data/medium_1.json", 12, 25, true);
         generate("data/medium_2.json", 15, 30, false);
         generate("data/medium_3.json", 18, 35, true);
 
-        // large graphs
         generate("data/large_1.json", 25, 60, true);
         generate("data/large_2.json", 30, 90, false);
         generate("data/large_3.json", 40, 120, true);
@@ -45,14 +30,6 @@ public class GraphGenerator {
         System.out.println("9 graph datasets generated successfully in /data/");
     }
 
-    /**
-     * Generate a directed weighted graph and save as JSON.
-     *
-     * @param filename output file name under /data/
-     * @param n        number of vertices
-     * @param edges    number of edges
-     * @param allowCycles true to include random cycles
-     */
     public static void generate(String filename, int n, int edges, boolean allowCycles) throws IOException {
         JSONObject obj = new JSONObject();
         obj.put("directed", true);
@@ -66,8 +43,8 @@ public class GraphGenerator {
         while (arr.length() < edges && attempts < edges * 5) {
             int u = rand.nextInt(n);
             int v = rand.nextInt(n);
-            if (u == v) { attempts++; continue; } // no self-loops
-            if (!allowCycles && v <= u) { attempts++; continue; } // avoid cycles for DAGs
+            if (u == v) { attempts++; continue; }
+            if (!allowCycles && v <= u) { attempts++; continue; }
 
             String key = u + "_" + v;
             if (used.contains(key)) { attempts++; continue; }
