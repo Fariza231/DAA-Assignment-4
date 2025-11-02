@@ -14,7 +14,6 @@ public class CondensationBuilder {
 
         List<Set<Integer>> dagSet = new ArrayList<>();
         for (int i = 0; i < sccs.size(); i++) dagSet.add(new HashSet<>());
-
         for (int u = 0; u < adj.size(); u++) {
             for (int v : adj.get(u)) {
                 int cu = compMap.get(u);
@@ -23,10 +22,10 @@ public class CondensationBuilder {
             }
         }
 
+
         List<List<Integer>> dag = new ArrayList<>();
         for (Set<Integer> s : dagSet)
             dag.add(new ArrayList<>(s));
-
         return dag;
     }
 }
