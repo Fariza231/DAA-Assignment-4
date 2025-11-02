@@ -22,7 +22,6 @@ public class CondensationBuilder {
             }
         }
 
-
         List<List<Integer>> dag = new ArrayList<>();
         for (Set<Integer> s : dagSet)
             dag.add(new ArrayList<>(s));
